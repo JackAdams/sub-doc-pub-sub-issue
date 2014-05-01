@@ -1,0 +1,29 @@
+<head>
+  <title>pub-sub-issue</title>
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <h1>Click buttons below to see the problem</h1>
+  <h4>Document:</h4>
+  {{#with post}}
+  {<br />
+    &nbsp;&nbsp;"text": <strong>{{text}}</strong>,<br />
+    &nbsp;&nbsp;"postData": {
+    <br />
+    {{#with postData.commentCount}}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"commentCount": <strong>{{this}}</strong>,<br />
+    {{/with}}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"likeCount": <strong>{{postData.likeCount}}</strong><br />
+    &nbsp;&nbsp;}<br />
+  }
+  {{/with}}
+  <br />
+  {{#if sub}}<h4 style="color:red;">Other subscription active -- you now have no ability to resubscribe to the commentCount field in the postData subdocument field</h4>{{/if}}
+  <br />
+  <input id="toggle" type="button" value="Click to toggle commentCount field by requesting either some or all fields via pub-sub" /><br />
+  <input id="sub" type="button" value="Now click here to toggle a conflicting subscription that only wants part of the subdocument" />
+</template>
